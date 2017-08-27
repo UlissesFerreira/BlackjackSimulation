@@ -50,6 +50,10 @@ public class Player {
 		}
 		
 	}
+	
+	public ArrayList<Integer> getAllCards() {
+		return memory;
+	}
 
 	public String toString() {
 		return memory.toString();

@@ -54,4 +54,8 @@ public class Deck {
 		return 0;
 	}
 	
+	public int getSize() {
+		return size;
+	}
+	
 }

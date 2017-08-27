@@ -10,8 +10,13 @@ public class Myself {
 	ArrayList<Integer> memory;
 	ArrayList<Integer> memory2;
 	
+	ArrayList<Integer> knowledge;
+	int hiLoCount;
+	double realCount;
+	
 	int wins;
 	int losses;
+	int bets;
 	
 	public Myself(Deck deckInUse) {
 		myDeck = deckInUse;
@@ -24,6 +29,11 @@ public class Myself {
 		
 		wins = 0;
 		losses = 0;
+		bets = 0;
+		
+		knowledge = new ArrayList<Integer>();
+		hiLoCount = 0;
+		realCount = 0;
 		
 	}
 
@@ -34,6 +44,10 @@ public class Myself {
 		memory2.clear();
 		hasTwoHands = false;
 		doubleDown = false;
+		
+		knowledge.clear();
+		hiLoCount = 0;
+		realCount = 0;
 	}
 
 	public void getCard() {
@@ -59,7 +73,20 @@ public class Myself {
 		getCardHandTwo();
 	}
 	
-	public void makePlay(int dealersCard) {
+	public void makePlay(int dealersCard, int deckSize) {
+		knowledge.add(dealersCard);
+		
+		for (Integer card : knowledge) {
+			if (card == 1) { //caso algum as tenha sido substituido
+				hiLoCount -= 1;
+			} else if (card <= 6) {
+				hiLoCount += 1;
+			} else if (card >= 10) {
+				hiLoCount -= 1;
+			}
+		}
+		realCount = (hiLoCount * 100.0 / (deckSize - knowledge.size()));
+		
 		boolean donePlay = false;
 		int firstCard = memory.get(0);
 		int secondCard = memory.get(1);
@@ -217,6 +244,7 @@ public class Myself {
 
 		if (score > 21) {
 			losses += doubleDown ? 2 : 1;
+			bets += doubleDown ? 2 : 1;
 		} else if (score == 21 && dealerFinalScore == 21) {
 
 			if (memory.size() == 2 && blackjack) {
@@ -226,25 +254,31 @@ public class Myself {
 			} else if (memory.size() == 2 && !blackjack) {
 
 				wins += doubleDown ? 2 : 1;
+				bets += doubleDown ? 2 : 1;
 			} else {
 
 				losses += doubleDown ? 2 : 1;
+				bets += doubleDown ? 2 : 1;
 			}
 			
 		} else if (score == dealerFinalScore) {
 
 		} else if (score > dealerFinalScore) {
 			wins += doubleDown ? 2 : 1;
+			bets += doubleDown ? 2 : 1;
 		} else if (dealerFinalScore > 21) {
 			wins += doubleDown ? 2 : 1;
+			bets += doubleDown ? 2 : 1;
 		} else if (score < dealerFinalScore) {
 			losses += doubleDown ? 2 : 1;
+			bets += doubleDown ? 2 : 1;
 		}
 		
 		if (hasTwoHands) {
 			
 			if (score2 > 21) {
 				losses += 1;
+				bets += 1;
 			} else if (score2 == 21 && dealerFinalScore == 21) {
 				if (memory2.size() == 2 && blackjack) {
 
@@ -252,29 +286,39 @@ public class Myself {
 
 				} else if (memory2.size() == 2 && !blackjack) {
 					wins += 1;
+					bets += 1;
 				} else {
 					losses += 1;
+					bets += 1;
 				}
 				
 			} else if (score2 == dealerFinalScore) {
 
 			} else if (score2 > dealerFinalScore) {
 				wins += 1;
+				bets += 1;
 			} else if (dealerFinalScore > 21) {
 				wins += 1;
+				bets += 1;
 			} else if (score < dealerFinalScore) {
 				losses += 1;
+				bets += 1;
 			}	
 		}
 	}
+	
+	public void addKnowledge(ArrayList<Integer> allCards) {
+		knowledge.addAll(allCards);
+		knowledge.addAll(memory);
+	}
 
 	public String getData() {
-		return "Wins: " + wins + "\n" + "Losses: " + losses;
+		return "Wins: " + wins + "\n" + "Losses: " + losses + "\n" + "Bets: " + bets;
 	}
 
 	public String toString() {
 		if (!hasTwoHands) {
-			return memory.toString();
+			return knowledge.toString() + "\n" + memory.toString() + "\n" + hiLoCount + "\n" + realCount;
 		} else {
 			return memory.toString() + "\n" + memory2.toString();
 		}

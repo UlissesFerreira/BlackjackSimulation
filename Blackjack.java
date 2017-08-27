@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Blackjack {
 
@@ -7,11 +8,14 @@ public class Blackjack {
 	Deck myDeck;
 	int numOfPlayers = 4;
 	
+	ArrayList<Integer> knowledge;
+	
 	public Blackjack() {
 		myDeck = new Deck(6);
 		me = new Myself(myDeck);
 		dealer = new Dealer(myDeck);
 		players = new Player[numOfPlayers];
+		knowledge = new ArrayList<Integer>();
 		for (int i = 0; i <= numOfPlayers - 1; i++) {
 			players[i] = new Player(myDeck);
 		}
@@ -24,6 +28,7 @@ public class Blackjack {
 		me = new Myself(myDeck);
 		dealer = new Dealer(myDeck);
 		players = new Player[numOfPlayers];
+		knowledge = new ArrayList<Integer>();
 		for (int i = 0; i <= numOfPlayers - 1; i++) {
 			players[i] = new Player(myDeck);
 		}
@@ -34,16 +39,21 @@ public class Blackjack {
 	 */
 	public void runSimulation(int iterations) {
 		while (iterations > 0) {
-			//distribuir cartas
 			prepareGame();
-			//System.out.println("Dealer - " + dealer.toString());
-			//System.out.println("Me - " + me.toString());
 			for (Player individual : players) {
 				individual.makePlay();
+				knowledge.addAll(individual.getAllCards());
 			}
-			me.makePlay(dealer.getVisibleCard());
+			me.addKnowledge(knowledge);
+			
+			me.makePlay(dealer.getVisibleCard(), myDeck.getSize());
 			dealer.makePlay();
 			//System.out.println("--- After Play ---");
+			//System.out.println(players[0].toString());
+			//System.out.println(players[1].toString());
+			//System.out.println(players[2].toString());
+			//System.out.println(players[3].toString());
+			
 			//System.out.println("Dealer - " + dealer.toString());
 			//System.out.println("Me - " + me.toString());
 			me.compareScore(dealer.getFinalScore(), dealer.isBlackjack());
@@ -55,6 +65,7 @@ public class Blackjack {
 	}
 
 	public void prepareGame() {
+		knowledge.clear();
 		myDeck.shuffle();
 		myDeck.shuffle();
 		myDeck.shuffle();
@@ -75,5 +86,6 @@ public class Blackjack {
 		me.getCard();
 		dealer.getCard();
 	}
+	
 
 }
