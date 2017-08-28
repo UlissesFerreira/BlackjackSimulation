@@ -15,3 +15,16 @@ Here's a small description of each class in the source code. Almost all represen
   - **Player.java** - Represents another player at the table. These player's game choices are fairly simple. Each player draws until they reach a desired score or bust (much like a dealer). Their purpose is to add more randomness to the game and allow the "Myself" object to have more cards to count.
   - **Teste.java** - Creates a Blackjack object and runs the simulation ("main" method).
 
+# Casino Lisboa - Rule Set
+
+Each casino has his own rules of the game. These variations have a big influence in the odds of the player. This casino also uses CSMs (Continuos Shuffle Machines) which makes card counting between each round useless, since all the cards are put back in the deck and are in theory shuffled, resetting the counts.
+
+- Each table uses 4 to 6 decks.
+- You can only split once (two hands maximum).
+- You can't double down after a split.
+- Split aces only get one card each, you are not allowed to hit.
+- 21's obtained in splitted aces are considered 21, not blackjacks.
+- You can double down on 9 to 11 only.
+- You can surrender after you get your hand if the dealer's card isn't an ace.
+- You can insure.
+
