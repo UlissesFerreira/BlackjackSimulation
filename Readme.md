@@ -27,4 +27,6 @@ Each casino has his own rules of the game. These variations have a big influence
 - You can double down on 9 to 11 only.
 - You can surrender after you get your hand if the dealer's card isn't an ace.
 - You can insure.
-
+- Dealer doesn't peak for blackjack.
+- Dealer stands on soft 17
+- Blackjack pays 3 to 2
