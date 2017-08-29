@@ -30,3 +30,13 @@ Each casino has his own rules of the game. These variations have a big influence
 - Dealer doesn't peak for blackjack.
 - Dealer stands on soft 17
 - Blackjack pays 3 to 2
+
+# Results
+
+After simulating a total of 20 million hands the results were registered in an open document spreadsheet. 
+
+The picture hosted here in GitHub shows the variation in the house edge every 1 million hands. As we can see, the probability of a house win fluctuates around **0.52** and **0.518** and averages at **0.5188**. Therefore, we can say that on the long term, any Blackjack player using Edward Thorp's basic strategy at the Lisbon Casino will, on the long-term, lose money (as expected in a Casino game). For every 100 hands played, the casino will win 52 and the player 48. This house edge of **2%** is what provides profit for the casino.
+
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "House Advantage")
+
+However, mathematically speaking, this is the most advantageous game in the casino, beating the common Roulette, with an house edge of around **2.7%**, one of the lowest of all luck games.
